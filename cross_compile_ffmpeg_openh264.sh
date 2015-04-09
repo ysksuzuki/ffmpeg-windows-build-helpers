@@ -1160,8 +1160,10 @@ build_libdecklink() {
 build_ffmpeg() {
   local type=$1
   local shared=$2
-  local git_url="https://github.com/FFmpeg/FFmpeg.git"
-  local output_dir="ffmpeg_git"
+  #local git_url="https://github.com/FFmpeg/FFmpeg.git"
+  local git_url="http://ffmpeg.org/releases/ffmpeg-2.6.tar.gz"
+  #local output_dir="ffmpeg_git"
+  local output_dir="ffmpeg-2.6"
 
   # FFmpeg + libav compatible options
   # local extra_configure_opts="--enable-libsoxr --enable-fontconfig --enable-libass --enable-libutvideo --enable-libbluray --enable-iconv --enable-libtwolame --extra-cflags=-DLIBTWOLAME_STATIC --enable-libzvbi --enable-libcaca --enable-libmodplug --extra-libs=-lstdc++ --extra-libs=-lpng --enable-libvidstab --enable-libx265 --enable-decklink --extra-libs=-loleaut32 " # --enable-libquvi
@@ -1186,7 +1188,8 @@ build_ffmpeg() {
     # avoid installing this to system?
     extra_configure_opts="$extra_configure_opts --prefix=$final_install_dir"
   else
-    do_git_checkout $git_url $output_dir
+    #do_git_checkout $git_url $output_dir
+    download_and_unpack_file $git_url $output_dir
     extra_configure_opts="--enable-static --disable-shared $extra_configure_opts"
   fi
   cd $output_dir
